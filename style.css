@@ -1,0 +1,244 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    
+    font-family: 'cursive';
+    background-color: #f0f4f8;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 546px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 70px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.current-date {
+    text-align: left;
+}
+
+.current-time {
+    font-size: 20px;
+    color: #008184;
+}
+
+.container .calendar {
+    width: 546px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+    font-family: sans-serif;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.calendar .month {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    background-color: #008184;
+    border-radius: 5px;
+}
+
+.month .month-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.month #month {
+    font-size: 24px;
+    margin: 0;
+}
+
+.month p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+}
+
+.month .arrow {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-color: #016d6f;
+    line-height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.month .arrow:hover {
+    background-color: #005758;
+}
+
+.container .week {
+    display: flex;
+    background-color: #016d6f;
+    color: white;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.week div {
+    width: 14.28%;
+    text-align: center;
+    padding: 10px 0px;
+    transition: 0.4s;
+}
+
+.week .active {
+    background-color: #005758;
+}
+
+.week div:hover {
+    background-color: #005758;
+
+}
+
+
+
+.container .dates {
+
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    margin-top: 10px;
+    border-radius: 5px;
+
+
+}
+
+.dates div {
+    width: 68px;
+    height: 48px;
+    margin: 2px;
+    text-align: center;
+    line-height: 48px;
+    border: 1px solid #e9e9e9;
+    transition: 0.4s;
+
+    border-radius: 5px;
+}
+
+.dates div:hover:not(.today) {
+    border: 1px dashed #111;
+
+    background-color: #f0f0f0;
+    color: #008184;
+    cursor: pointer;
+}
+
+.dates .today {
+    background-color: #008184;
+    color: white;
+
+
+    border-radius: 50%;
+}
+
+.event-section {
+
+    width: 546px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    font-family: sans-serif;
+    border: 1px solid #ccc;
+
+}
+
+.event-section h3 {
+    margin-bottom: 10px;
+}
+
+.event-section input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.event-section button {
+    width: 100%;
+    padding: 10px;
+    background-color: #008184;
+    color: white;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.event-section button:hover {
+    background-color: #005658;
+}
+
+
+.event-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.event-section ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+.event-section ul li button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.event-section ul li button.edit {
+    background-color: #4caf50;
+
+}
+
+
+.event-section ul li button:hover {
+
+    opacity: 0.8;
+
+}
