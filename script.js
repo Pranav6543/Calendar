@@ -1,5 +1,3 @@
-
-
 const monthEl = document.getElementById('month');
 const dateEl = document.getElementById('date');
 const datesEl = document.querySelector('.dates');
@@ -16,9 +14,6 @@ const minuteEl = document.querySelector('.minute');
 const secondEl = document.querySelector('.second');
 const formatEl = document.querySelector('.format');
 
-
-
-
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -27,6 +22,7 @@ const months = [
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let events = [];
+let alertShown = false;
 
 function renderCalendar() {
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
@@ -38,36 +34,33 @@ function renderCalendar() {
     activeMonthEl.innerText = `${months[currentMonth]} ${currentYear}`;
     activeDateEl.innerText = new Date().toDateString();
 
-   
-   
     let days = '';
 
-
-
-
-    for (let i = firstDayOfMonth; i > 0; i--)
-         {
+    for (let i = firstDayOfMonth; i > 0; i--) {
         days += `<div class="prev-date">${lastDayOfLastMonth - i + 1}</div>`;
     }
 
-    for (let i = 1; i <= lastDateOfMonth; i++)
-         {
+    for (let i = 1; i <= lastDateOfMonth; i++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        const hasEvent = events.some(event => event.date === dateStr);
+        const className = hasEvent ? 'task-date' : '';
         if (i === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear()) {
-            days += `<div class="today">${i}</div>`;
+            days += `<div class="today ${className}">${i}</div>`;
+            if (hasEvent && !alertShown) {
+                alertShown = true;
+                alert(`You have events today: ${events.filter(event => event.date === dateStr).map(event => event.title).join(', ')}`);
+            }
         } else {
-            days += `<div>${i}</div>`;
+            days += `<div class="${className}">${i}</div>`;
         }
     }
 
-   
-   
     const nextDays = 7 - new Date(currentYear, currentMonth + 1, 0).getDay() - 1;
 
     for (let i = 1; i <= nextDays; i++) {
         days += `<div class="next-date">${i}</div>`;
     }
 
- 
     datesEl.innerHTML = days;
 }
 
@@ -93,17 +86,13 @@ addEventBtn.addEventListener('click', () => {
     const eventTitle = eventTitleInput.value;
     const eventDate = eventDateInput.value;
 
-
     if (eventTitle && eventDate) {
         events.push({ title: eventTitle, date: eventDate });
         renderEvents();
+        renderCalendar();
         eventTitleInput.value = '';
         eventDateInput.value = '';
-    
-    
     }
-
-
 });
 
 function renderEvents() {
@@ -113,31 +102,22 @@ function renderEvents() {
         li.innerHTML = `${event.date}: ${event.title} 
             <button class="edit" onclick="editEvent(${index})">Edit</button>
             <button onclick="deleteEvent(${index})">Delete</button>`;
-            eventListEl.appendChild(li);
-   
-        });
-
-
-    }
+        eventListEl.appendChild(li);
+    });
+}
 
 function editEvent(index) {
     const event = events[index];
     eventTitleInput.value = event.title;
     eventDateInput.value = event.date;
     deleteEvent(index);
-
-
 }
-
-
 
 function deleteEvent(index) {
     events.splice(index, 1);
     renderEvents();
-
-
+    renderCalendar();
 }
-
 
 function updateTime() {
     const now = new Date();
@@ -146,18 +126,14 @@ function updateTime() {
     const second = now.getSeconds();
     const format = hour >= 12 ? 'PM' : 'AM';
 
-
-
     hour = hour % 12;
-    hour = hour ? hour : 12; 
+    hour = hour ? hour : 12; // the hour '0' should be '12'
 
     hourEl.innerText = hour < 10 ? '0' + hour : hour;
     minuteEl.innerText = minute < 10 ? '0' + minute : minute;
     secondEl.innerText = second < 10 ? '0' + second : second;
     formatEl.innerText = format;
 }
-
-
 
 setInterval(updateTime, 1000);
 updateTime();
